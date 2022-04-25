@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .form-container {
+        width: max-content;
+        margin: auto;
+        border-bottom: 1px solid black;
+        padding: 0.5em;
+        margin-bottom: 1rem;
+      }
+      label {
+        font-size: 1.2 rem;
+      }
+      input[type="text"] {
+        padding: 0.2em 1em;
+        font-size: 1rem;
+      }
+      button {
+        border-radius: 1rem;
+        border: none;
+        background-color: rgb(111, 202, 230);
+        font-size: 1rem;
+        padding: 7.5px 1.1rem;
+        cursor: pointer;
+      }
+      h1 {
+        width: max-content;
+        margin: 10px auto;
+        text-align: center;
+
+        border-bottom: 1px solid black;
+      }
+      table {
+        width: 100%;
+        color: rgb(56, 50, 11);
+        font-size: 20px;
+        font-weight: 600;
+        overflow: scroll;
+      }
+      .table_body {
+        text-align: center;
+      }
+      tr:nth-child(even) {
+        background-color: rgb(192, 166, 166);
+      }
+      tr:nth-child(odd) {
+        background-color: rgb(224, 212, 212);
+      }
+      tr:hover {
+        background-color: rgb(156, 154, 154);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>URL Shortener</h1>
+
+      <div class="form-container">
+        <form action="" method="post" class="form-control">
+          <label for="">Enter URL: </label>
+          <input
+            type="text"
+            name="url"
+            class="url-input"
+            placeholder="Enter Url to get short URL"
+          />
+
+          <button type="submit" name="submit">Get short URL</button>
+        </form>
+      </div>
+
+      <div class="tableContainer">
+        <table>
+          <tr>
+            <th>URL</th>
+            <th>Shortended URL</th>
+            <th>Clicks</th>
+            <th>Action</th>
+          </tr>
+          <tbody class="table_body"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
