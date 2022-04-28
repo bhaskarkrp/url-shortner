@@ -1,13 +1,15 @@
 async function openUrl(url) {
-  let data = await fetch(`http://localhost:9000/post/${url}`);
+  let data = await fetch(
+    `https://url-shortner-backendd.herokuapp.com/post/${url}`
+  );
   const thatUrl = await data.json();
 
-  //   console.log(thatUrl.originalUrl);
+  // console.log(thatUrl.originalUrl);
   return thatUrl.originalUrl;
 }
 
 async function getUrls() {
-  let datas = await fetch(`http://localhost:9000/post/`);
+  let datas = await fetch(`https://url-shortner-backendd.herokuapp.com/post/`);
 
   let urls = await datas.json();
 
@@ -18,7 +20,7 @@ async function getUrls() {
 
 function postUrl(input) {
   console.log({ originalUrl: input });
-  fetch("http://localhost:9000/post/", {
+  fetch("https://url-shortner-backendd.herokuapp.com/post/", {
     method: "POST",
     body: JSON.stringify({ originalUrl: input }),
     headers: {
@@ -27,6 +29,8 @@ function postUrl(input) {
   });
 }
 
+const table_body = document.querySelector(".table_body");
+
 document
   .querySelector(".form-control")
   .addEventListener("submit", async (e) => {
@@ -34,24 +38,34 @@ document
     let input = document.querySelector(".url-input").value;
     console.log(input);
     //   postUrl(input);
-    let postedData = await fetch("http://localhost:9000/post/", {
-      method: "POST",
-      body: JSON.stringify({ originalUrl: input }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8", //whole line is important
-      },
-    });
+    if (input.includes(".com")) {
+      let postedData = await fetch(
+        "https://url-shortner-backendd.herokuapp.com/post/",
+        {
+          method: "POST",
+          body: JSON.stringify({ originalUrl: input }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8", //whole line is important
+          },
+        }
+      );
 
-    location.reload();
+      location.reload();
+    } else {
+      alert("Please enter a valid URL");
+    }
   });
 
 //async await fetch works this way
 getUrls().then((res) => {
   //   console.log(res);
-  res.map((url) => appendData(url));
+  if (res.length > 0) {
+    res.map((url) => appendData(url));
+  }
+  // else {
+  //   table_body.innerHTML = "Add URLS first";
+  // }
 });
-
-const table_body = document.querySelector(".table_body");
 
 function appendData(data) {
   let tr = document.createElement("tr");
@@ -66,13 +80,17 @@ function appendData(data) {
 
     //async await fetch works this way
     openUrl(data.shortUrl).then((url) => {
-      //   console.log(url);
-      window.open(url, "_blank"); //to Open a link in new tab
+      if (!url.includes("https://") && !url.includes("http://")) {
+        url = "http://" + url;
+      }
+      // console.log(url);
+
+      window.open(url); //to Open a link in new tab
       location.reload();
     });
   };
-  anchor.innerText = `www.${data.shortUrl}.bhaskar`;
-  anchor.target = "_blank";
+  anchor.innerText = `${data.shortUrl}.devBhaskar`;
+  // anchor.target = "_blank";
   td2.append(anchor);
   let td3 = document.createElement("td");
   td3.innerText = data.counts;
@@ -85,7 +103,7 @@ function appendData(data) {
   button.onclick = async () => {
     console.log(`clicked ${data.shortUrl}`);
     let deletedData = await fetch(
-      `http://localhost:9000/post/${data.shortUrl}`,
+      `https://url-shortner-backendd.herokuapp.com/post/${data.shortUrl}`,
       {
         method: "DELETE",
       }
