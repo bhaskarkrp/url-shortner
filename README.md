@@ -1,7 +1,7 @@
 ## URL Shortner with backend Using Node, Express, MongoDB
 
 ## Demo
-<a href='https://url-shortner-umber.vercel.app/'>Live Demo</a>
+<a href='https://url-shortner-umber.vercel.app/' target="_blank">Live Demo</a>
 
 ## Tech Stack
 
